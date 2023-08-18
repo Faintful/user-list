@@ -3,8 +3,8 @@ import './Form.css';
 import Input from './Input';
 
 const initialState = {
-  name: '',
-  age: 0,
+  Name: '',
+  Age: '',
 };
 
 export default function Form() {
@@ -20,7 +20,12 @@ export default function Form() {
   return (
     <form className=''>
       {['Name', 'Age'].map((element, index) => (
-        <Input tag={element} key={index} onChange={onChangeHandler} />
+        <Input
+          state={inputState}
+          tag={element}
+          key={index}
+          onChange={onChangeHandler}
+        />
       ))}
     </form>
   );

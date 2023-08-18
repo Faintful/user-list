@@ -1,11 +1,11 @@
 import './Input.css';
 
-export default function Input({ tag, onChange }) {
+export default function Input({ tag, onChange, state }) {
   return (
     <p className=''>
-      <label htmlFor={tag.toLowerCase()}>
+      <label htmlFor={tag}>
         {tag}
-        <input onChange={onChange} id={tag.toLowerCase()} />
+        <input value={state[tag]} onChange={onChange} id={tag} />
       </label>
     </p>
   );
