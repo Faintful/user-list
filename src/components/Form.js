@@ -7,7 +7,7 @@ const initialState = {
   Age: '',
 };
 
-export default function Form() {
+export default function Form({ onSubmit }) {
   const [inputState, setInput] = useState(initialState);
 
   const onChangeHandler = ({ target: { id, value } }) => {
@@ -17,8 +17,14 @@ export default function Form() {
     }));
   };
 
+  const submitHandler = (submitEvent) => {
+    submitEvent.preventDefault();
+    onSubmit(inputState);
+    setInput(initialState);
+  };
+
   return (
-    <form className=''>
+    <form onSubmit={submitHandler} className=''>
       {['Name', 'Age'].map((element, index) => (
         <Input
           state={inputState}
@@ -27,6 +33,7 @@ export default function Form() {
           onChange={onChangeHandler}
         />
       ))}
+      <button type='submit'>Add User</button>
     </form>
   );
 }
