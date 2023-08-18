@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import Form from './components/Form';
+import Result from './components/Result';
 
 function App() {
-  const [dataState, setData] = useState(null);
+  const [userDataState, setUserData] = useState([]);
 
   const submitHandler = (data) => {
-    setData(data);
+    setUserData((prevState) => [...prevState, data]);
   };
 
   return (
     <div>
       <Form onSubmit={submitHandler} />
+      {userDataState.length > 0 ? (
+        <Result userData={userDataState} />
+      ) : (
+        <p>No data</p>
+      )}
     </div>
   );
 }
