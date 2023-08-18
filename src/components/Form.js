@@ -1,5 +1,12 @@
 import './Form.css';
+import Input from './Input';
 
 export default function Form() {
-  return <form></form>;
+  return (
+    <form className=''>
+      {['Name', 'Age'].map((element, index) => (
+        <Input tag={element} key={index} />
+      ))}
+    </form>
+  );
 }

@@ -1,10 +1,10 @@
 import './Input.css';
 
-export default function Input({ label }) {
+export default function Input({ tag }) {
   return (
     <div className=''>
-      <label htmlFor={label}>
-        <input id={label}>{label}</input>
+      <label htmlFor={tag}>
+        <input id={tag}>{tag}</input>
       </label>
     </div>
   );
