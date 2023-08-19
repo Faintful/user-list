@@ -7,7 +7,7 @@ const initialState = {
   Age: '',
 };
 
-export default function Form({ onSubmit }) {
+export default function Form({ onSubmit, errorHandler }) {
   const [inputState, setInput] = useState(initialState);
 
   const onChangeHandler = ({ target: { id, value } }) => {
@@ -19,6 +19,17 @@ export default function Form({ onSubmit }) {
 
   const submitHandler = (submitEvent) => {
     submitEvent.preventDefault();
+    //validation
+    if (inputState['Name'].length === 0 || inputState['Age'].length === 0) {
+      errorHandler('blank');
+      return;
+    }
+
+    if (inputState['Age'] < 0) {
+      errorHandler('invalidAge');
+      return;
+    }
+
     onSubmit(inputState);
     setInput(initialState);
   };
