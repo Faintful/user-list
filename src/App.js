@@ -26,12 +26,14 @@ function App() {
 
   return (
     <div>
-      <Form errorHandler={errorHandler} onSubmit={submitHandler} />
-      {userDataState.length > 0 ? (
-        <Result userData={userDataState} />
-      ) : (
-        <p>No data</p>
-      )}
+      <div style={!errorState ? {} : { backgroundColor: '#00000080' }}>
+        <Form errorHandler={errorHandler} onSubmit={submitHandler} />
+        {userDataState.length > 0 ? (
+          <Result userData={userDataState} />
+        ) : (
+          <p>No data</p>
+        )}
+      </div>
       {!errorState ? null : <Error errorType={errorType} />}
     </div>
   );

@@ -13,7 +13,7 @@ function errorSwitch(error) {
 
 export default function Error({ errorType }) {
   return (
-    <div>
+    <div className='error'>
       <div>
         <h2>Invalid input</h2>
         {errorSwitch(errorType)}
