@@ -5,11 +5,11 @@ import Error from './components/Error';
 
 function App() {
   const [userDataState, setUserData] = useState([]);
-  const [errorState, setError] = useState(false);
+  const [errorState, setErrorState] = useState(false);
   const [errorType, setErrorType] = useState(null);
 
   const errorHandler = (error) => {
-    setError(true);
+    setErrorState(true);
     switch (error) {
       case 'blank':
         setErrorType('blank');
@@ -24,9 +24,16 @@ function App() {
     setUserData((prevState) => [...prevState, data]);
   };
 
+  const cancelHandler = () => {
+    setErrorState(false);
+  };
+
   return (
     <div>
-      <div style={!errorState ? {} : { backgroundColor: '#00000080' }}>
+      <div
+        onClick={cancelHandler}
+        style={!errorState ? {} : { backgroundColor: '#00000080' }}
+      >
         <Form errorHandler={errorHandler} onSubmit={submitHandler} />
         {userDataState.length > 0 ? (
           <Result userData={userDataState} />
@@ -34,7 +41,9 @@ function App() {
           <p>No data</p>
         )}
       </div>
-      {!errorState ? null : <Error errorType={errorType} />}
+      {!errorState ? null : (
+        <Error cancelHandler={cancelHandler} errorType={errorType} />
+      )}
     </div>
   );
 }

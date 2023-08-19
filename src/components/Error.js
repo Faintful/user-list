@@ -11,13 +11,14 @@ function errorSwitch(error) {
   }
 }
 
-export default function Error({ errorType }) {
+export default function Error({ errorType, cancelHandler }) {
   return (
     <div className='error'>
       <div>
         <h2>Invalid input</h2>
         {errorSwitch(errorType)}
       </div>
+      <button onClick={cancelHandler}>Okay</button>
     </div>
   );
 }
