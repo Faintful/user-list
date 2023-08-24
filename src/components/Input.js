@@ -1,12 +1,15 @@
+import React, { forwardRef } from 'react';
 import './Input.css';
 
-export default function Input({ tag, onChange, state }) {
+const Input = forwardRef(({ tag }, ref) => {
   return (
     <p className=''>
       <label htmlFor={tag}>
         {tag}
-        <input value={state[tag]} onChange={onChange} id={tag} />
+        <input ref={ref} id={tag} />
       </label>
     </p>
   );
-}
+});
+
+export default Input;

@@ -1,48 +1,57 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './Form.css';
 import Input from './Input';
+import Error from './Error';
+import ReactDOM from 'react-dom';
 
-const initialState = {
-  Name: '',
-  Age: '',
-};
+export default function Form({ onSubmit }) {
+  const [errorState, setError] = useState(null);
 
-export default function Form({ onSubmit, errorHandler }) {
-  const [inputState, setInput] = useState(initialState);
+  const refs = {
+    Name: useRef(''),
+    Age: useRef(''),
+  };
 
-  const onChangeHandler = ({ target: { id, value } }) => {
-    setInput((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+  const cancelHandler = () => {
+    setError(null);
   };
 
   const submitHandler = (submitEvent) => {
     submitEvent.preventDefault();
     //validation
-    if (inputState['Name'].length === 0 || inputState['Age'].length === 0) {
-      errorHandler('blank');
+    if (
+      refs.Name.current.value.length === 0 ||
+      refs.Age.current.value.length === 0
+    ) {
+      setError({
+        cause: 'Empty fields',
+        message: 'Please enter a valid name and age (non-empty values)',
+      });
       return;
     }
 
-    if (inputState['Age'] < 0) {
-      errorHandler('invalidAge');
+    if (refs.Age.current.value < 0 || isNaN(refs.Age.current.value)) {
+      setError({
+        cause: 'Invalid Number',
+        message: 'Please enter a valid age (> 0)',
+      });
       return;
     }
 
-    onSubmit(inputState);
-    setInput(initialState);
+    onSubmit({ Name: refs.Name.current.value, Age: refs.Age.current.value });
+    refs.Name.current.value = '';
+    refs.Age.current.value = '';
   };
 
   return (
     <form onSubmit={submitHandler} className=''>
+      {errorState !== null &&
+        ReactDOM.createPortal(
+          <Error type={errorState} onCancel={cancelHandler} />,
+          document.getElementById('error-modal')
+        )}
       {['Name', 'Age'].map((element, index) => (
-        <Input
-          state={inputState}
-          tag={element}
-          key={index}
-          onChange={onChangeHandler}
-        />
+        <Input tag={element} key={index} ref={refs[element]} />
       ))}
       <button type='submit'>Add User</button>
     </form>

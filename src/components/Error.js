@@ -1,24 +1,17 @@
+import React from 'react';
 import './Error.css';
 
-function errorSwitch(error) {
-  switch (error) {
-    case 'blank':
-      return <p>Please enter a valid name and age (non-empty values) </p>;
-    case 'invalidAge':
-      return <p>Please enter a valid age (&gt; 0)</p>;
-    default:
-      return <p></p>;
-  }
-}
-
-export default function Error({ errorType, cancelHandler }) {
+export default function Error({ type, onCancel: cancelHandler }) {
   return (
-    <div className='error'>
-      <div>
-        <h2>Invalid input</h2>
-        {errorSwitch(errorType)}
+    <>
+      <div onClick={cancelHandler} className='backdrop' />
+      <div className='error'>
+        <div>
+          <h2>{type.cause}</h2>
+          <h1>{type.message}</h1>
+        </div>
+        <button onClick={cancelHandler}>Okay</button>
       </div>
-      <button onClick={cancelHandler}>Okay</button>
-    </div>
+    </>
   );
 }
